@@ -6,7 +6,7 @@ volumes:
 services:
 
   keycloak:
-    image: jboss/keycloak:latest
+    image: quay.io/keycloak/keycloak:latest
 
     volumes:
       - "./realm_properties.json:/etc/security/realm_properties.json"
@@ -15,9 +15,12 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
       - KEYCLOAK_IMPORT=/etc/security/realm_properties.json
     command:
       [
+        "start-dev",
         "-Djboss.http.port=8080",
         "-Dkeycloak.profile.feature.upload_scripts=enabled",
       ]
@@ -74,8 +77,8 @@ services:
       - SHOW_SQL=true
       - API_DSTU2_HOST=dstu2
       - API_DSTU2_PORT=8078
-      - API_STU3_HOST=stu3
-      - API_STU3_PORT=8079
+      #- API_STU3_HOST=stu3
+      #- API_STU3_PORT=8079
       - API_R4_HOST=r4
       - API_R4_PORT=8070
       - PATIENT_PICKER_HOST=localhost
